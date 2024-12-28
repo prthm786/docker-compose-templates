@@ -1,0 +1,36 @@
+services:
+  mysqldb:
+    image: mysql:latest
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=passwdwdmy
+      - MYSQL_DATABASE=wordpress
+    expose:  
+      - 3306
+      - 33060
+    restart: always
+    networks:
+      - net
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    environment:
+      - WORDPRESS_DB_HOST=mysqldb
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=passwdwdmy
+      - WORDPRESS_DB_NAME=wordpress
+    restart: always
+    networks:
+      - net
+
+volumes:
+  db_data:
+
+networks:
+  net:
+
+  
+    
